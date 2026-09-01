@@ -2,22 +2,22 @@
 
 ## Idea
 
-We study a six-qubit open quantum system with a $$U(1)$$ charge
+We study a six-qubit open quantum system with a \(U(1)\) charge
 
 $$
 Q=\sum_i n_i,\qquad n_i=(1-Z_i)/2,
 $$
 
-and prepare the initial state in the fixed sector $$Q=3$$.
+and prepare the initial state in the fixed sector \(Q=3\).
 
-The Hamiltonian conserves $$Q$$, while the Lindblad generator contains both
+The Hamiltonian conserves \(Q\), while the Lindblad generator contains both
 charge-preserving channels (dephasing and incoherent hopping) and
 charge-changing gain/loss channels. The latter allow the state to populate
 several charge sectors. This is necessary for a strong-to-weak symmetry
-crossover: a state that remains exactly inside one $$Q$$ sector would remain
+crossover: a state that remains exactly inside one \(Q\) sector would remain
 strong-symmetric.
 
-For a density matrix $$\rho$$ we calculate two offline diagnostics:
+For a density matrix \(\rho\) we calculate two offline diagnostics:
 
 $$
 C_{\rm lin}=|\mathrm{Tr}(\rho A_{1N})|
@@ -50,15 +50,15 @@ the neural network.
 
 The learned witness sees only experimentally accessible one- and two-body
 Pauli expectation values. There are 153 candidate observables. A trainable hard
-Top-$$K$$ selector chooses $$K=6$$ of them and an MLP maps those measurements to
-$$P_{\rm SW}$$.
+Top-\(K\) selector chooses \(K=6\) of them and an MLP maps those measurements to
+\(P_{\rm SW}\).
 
 ## Why continuous charge matching?
 
 Gain/loss necessarily mixes charge sectors, but we do not want the network to
 solve the task merely by measuring the amount of sector mixing.
 
-Therefore, after imposing $$C_{\rm lin}<0.02$$, states from the two $$R_2$$
+Therefore, after imposing \(C_{\rm lin}<0.02\), states from the two \(R_2\)
 classes are paired by nearest-neighbour matching in
 
 $$
@@ -66,7 +66,7 @@ $$
 $$
 
 Each pair has almost identical simple charge diagnostics, while one state has
-$$R_2\le0.05$$ and the other has $$R_2>0.05$$. Pair members must also originate
+\(R_2\le0.05\) and the other has \(R_2>0.05\). Pair members must also originate
 from different trajectories.
 
 Importantly, trajectories are split into train/validation/test **before**
@@ -84,14 +84,14 @@ scientific steps:
 
 2. `u.prepare_matched_dataset(...)`
    - trajectory split;
-   - condition $$C_{\rm lin}<0.02$$;
+   - condition \(C_{\rm lin}<0.02\);
    - continuous matching in charge diagnostics;
 
 3. `u.normalize_matched_features(...)`
    - normalization from training data only;
 
 4. `u.train_model(...)`
-   - hard Top-$$K$$ selector + MLP reader;
+   - hard Top-\(K\) selector + MLP reader;
 
 5. `u.evaluate_model(...)` and `u.charge_baselines(...)`
    - frozen test witness and simple charge-only controls;
@@ -111,7 +111,7 @@ Contains implementation details:
   - `build_hamiltonian`;
   - `liouvillian`;
   - time evolution;
-  - $$C_{\rm lin}$$, $$R_2$$, and charge diagnostics.
+  - \(C_{\rm lin}\), \(R_2\), and charge diagnostics.
 
 - **Dataset**
   - targeted Lindblad parameter sampling;
@@ -144,7 +144,7 @@ $$
 |101010\rangle,
 $$
 
-which belongs to $$Q=3$$.
+which belongs to \(Q=3\).
 
 Two evolutions are compared:
 
@@ -166,12 +166,12 @@ For both cases the code saves
 
 showing versus time:
 
-1. $$C_{\rm lin}(t)$$;
-2. $$R_2(t)$$;
-3. learned $$P_{\rm SW}(t)$$.
+1. \(C_{\rm lin}(t)\);
+2. \(R_2(t)\);
+3. learned \(P_{\rm SW}(t)\).
 
-It also saves CSV files with $$C_{\rm lin}$$, $$R_2$$, witness probability,
-$$\langle Q\rangle$$, $$\mathrm{Var}(Q)$$, and $$p_{\rm out}$$.
+It also saves CSV files with \(C_{\rm lin}\), \(R_2\), witness probability,
+\(\langle Q\rangle\), \(\mathrm{Var}(Q)\), and \(p_{\rm out}\).
 
 ## Running
 
